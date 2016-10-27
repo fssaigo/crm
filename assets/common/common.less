@@ -1,0 +1,188 @@
+@size-section-gutter: 32px;
+
+body {
+    position: relative;
+    height: auto;
+    min-height: 100%;
+}
+
+.layout {
+    padding-bottom: 50px;
+}
+
+.layout-header,
+.layout-page {
+    padding: 0 50px;
+}
+
+.layout-page-container {
+    margin: @size-section-gutter auto 0;
+    width: 1280px;
+}
+
+.layout-header-logo {
+    display: inline-block;
+    line-height: 64px;
+    padding: 0 20px;
+    font-size: 24px;
+    color: #999;
+}
+
+.layout-header-logo:hover {
+    color: #2db7f5;
+}
+
+.layout-page-breadcrumb {
+    padding-left: 24px;
+}
+
+.layout-page-wrapper {
+    margin-top: @size-section-gutter;
+    overflow: hidden;
+}
+
+.layout-page-aside {
+    float: left;
+    width: 180px;
+}
+
+.layout-page-aside .ant-menu-root {
+    margin-right: -1px;
+}
+
+.layout-page-title {
+    font-size: 20px;
+}
+
+.layout-page-section-title {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.layout-page-section-title > span {
+    position: relative;
+    z-index: 1;
+    padding: 0 .5em;
+    margin-left: 1em;
+    background-color: #fff;
+    color: #2db7f5;
+}
+
+.layout-page-section-title:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #e9e9e9;
+}
+
+.layout-page-content {
+    padding: 0 24px;
+    border-left: 1px solid #e9e9e9;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.layout-page-split {
+    border: none;
+    height: 1px;
+    background: #e9e9e9;
+    margin-bottom: 24px;
+}
+
+.layout-secondary-button {
+    margin-left: 1em;
+}
+
+.layout-copyright {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    line-height: 50px;
+    text-align: center;
+    color: #999;
+}
+
+.layout-table-row-red {
+    color: #d7000f;
+}
+
+.layout-table-row-blue {
+    color: #0007df;
+}
+
+.layout-table-actions > a:nth-child(n+2) {
+    margin-left: .5rem;
+}
+
+// ant override
+.ant-menu-inline .ant-menu-item-selected {
+    background-color: #eaf8fe;
+}
+
+.ant-input,
+.ant-btn,
+.ant-menu-submenu > .ant-menu,
+.ant-select-dropdown,
+.ant-select-selection,
+.ant-calendar,
+.ant-calendar-date,
+.ant-calendar-year-panel-year,
+.ant-calendar-month-panel-month,
+.ant-message-notice-content,
+.ant-notification-notice,
+.ant-time-picker-input,
+.ant-time-picker-panel-inner,
+.ant-pagination-item,
+.ant-pagination-jump-next,
+.ant-pagination-jump-prev,
+.ant-pagination-next,
+.ant-pagination-prev,
+.ant-cascader-menus,
+.ant-modal-content,
+.ant-alert {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.ant-table,
+.ant-table table {
+    -webkit-border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+}
+
+.ant-table-tbody > tr > td,
+.ant-table-thead > tr > th {
+    padding: 8px 5px;
+}
+
+.ant-table-row a:hover {
+    text-decoration: underline;
+}
+
+.ant-table-expanded-row .ant-form-item {
+    margin-bottom: 0;
+}
+
+.ant-modal-header {
+    -webkit-border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+}
+
+.ant-modal-footer {
+    -webkit-border-radius: 0 0 3px 3px;
+    -moz-border-radius: 0 0 3px 3px;
+    border-radius: 0 0 3px 3px;
+}
+
+.ant-modal-body .ant-form {
+    padding-top: 24px;
+}
