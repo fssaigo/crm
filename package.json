@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "private": true,
   "scripts": {
     "prod": "gulp --production",
@@ -14,8 +13,7 @@
     "laravel-elixir-webpack-official": "^1.0.2",
     "lodash": "^4.14.0",
     "vue": "^1.0.26",
-    "vue-resource": "^0.9.3"
-=======
+    "vue-resource": "^0.9.3",
   "name": "91canyin",
   "version": "1.0.0",
   "description": "91canyin",
@@ -52,6 +50,6 @@
     "less": "2.7.1",
     "less-loader": "2.2.3",
     "webpack": "1.13.2"
->>>>>>> 8fdb22b830219b367b88b3cb60802402101f5b14
   }
+}
 }
