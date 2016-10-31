@@ -76,8 +76,6 @@ class GroupService implements IGroup
         $group->setMerchantId($sysUserContext->getMerchantId());
         $group->setName($input['name']);
 
-        $this->userService->setRole($sysUserContext, $input['userId'], 2);
-
         if (!$group->save()) {
             throw new ServiceException(CommonExceptionConstants::getKey('data_save_failed'));
         }
@@ -115,9 +113,6 @@ class GroupService implements IGroup
         }
 
         if (!$group->save()) {
-            if (isset($input['userId']) && $input['userId']) {
-                $this->userService->setRole($sysUserContext, $input['userId'], 2);
-            }
             throw new ServiceException(CommonExceptionConstants::getKey('no_data_updated'));
         }
 
