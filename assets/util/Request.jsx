@@ -8,11 +8,9 @@ const io = axios.create({
 });
 
 io.interceptors.response.use(response => {
-    // console.log('log by res data interceptor', response);
-    console.log(response)
+    console.dir(response);
     return response;
 }, error => {
-    // console.log('log by res error interceptor', error);
     if (error.response && error.response.data && error.response.data.code === '100003') {
         location.href = '/login';
     }

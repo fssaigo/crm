@@ -1,15 +1,16 @@
 'use strict';
 
 import React from 'react';
-import { Row, Col, Form, Input, Modal, notification } from 'antd';
+import { Row, Col, Form, Select, Input, Modal, Spin, notification } from 'antd';
 const FormItem = Form.Item;
+const Option = Select.Option;
 
 import AppState from '../../common/AppState.jsx';
 const Metadata = AppState.Metadata;
 import Group from '../../models/Group.jsx';
 import * as ErrorMessageExtractor from '../../util/ErrorMessageExtractor.jsx';
 
-class GroupCreateModal extends React.Component {
+class ModalGroupCreate extends React.Component {
     state = {
         saving: false,
     };
@@ -41,7 +42,7 @@ class GroupCreateModal extends React.Component {
                     duration: 5,
                 });
 
-                this.props.onOk();
+                this.props.onOk(response.data);
             }).catch(error => {
                 this.setState({
                     saving: false,
@@ -57,6 +58,9 @@ class GroupCreateModal extends React.Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
+        const userOptions = this.props.users.map(user => {
+            return <Option key={user.id}>{user.name}</Option>
+        });
 
         return (
             <Modal title="新建小组"
@@ -65,24 +69,42 @@ class GroupCreateModal extends React.Component {
                    onCancel={this.props.onCancel}
                    onOk={this.handleOk.bind(this)}
             >
-                <Form horizontal>
-                    <Row>
-                        <Col span={24}>
-                            <FormItem label="名称" labelCol={{span:4}} wrapperCol={{span:12}}>
-                                {getFieldDecorator('name', {
-                                    rules: [
-                                        {
-                                            required: true,
-                                            message: '请填写小组名称',
-                                        }
-                                    ]
-                                })(
-                                    <Input placeholder="小组名称"/>
-                                )}
-                            </FormItem>
-                        </Col>
-                    </Row>
-                </Form>
+                <Spin spinning={this.props.loading}>
+                    <Form horizontal>
+                        <Row>
+                            <Col span={24}>
+                                <FormItem label="组长" labelCol={{span:4}} wrapperCol={{span:12}}>
+                                    {getFieldDecorator('userId', {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: '请选择小组组长',
+                                            }
+                                        ]
+                                    })(
+                                        <Select placeholder="组长名称">
+                                            {userOptions}
+                                        </Select>
+                                    )}
+                                </FormItem>
+                            </Col>
+                            <Col span={24}>
+                                <FormItem label="名称" labelCol={{span:4}} wrapperCol={{span:12}}>
+                                    {getFieldDecorator('name', {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: '请填写小组名称',
+                                            }
+                                        ]
+                                    })(
+                                        <Input placeholder="小组名称"/>
+                                    )}
+                                </FormItem>
+                            </Col>
+                        </Row>
+                    </Form>
+                </Spin>
             </Modal>
         )
     }
@@ -92,4 +114,4 @@ export default Form.create({
     mapPropsToFields() {
         return {}
     }
-})(GroupCreateModal);
+})(ModalGroupCreate);
