@@ -34,9 +34,6 @@ class MerchantService implements IMerchant
         }
         $data = $this->merchantDao->findOne($id);
         if ($data) {
-            $data = $data->toArray();
-            #$data['created_at'] = date('Y-m-d H:i:s', $data['created_at']);
-            #$data['updated_at'] = date('Y-m-d H:i:s', $data['updated_at']);
             return $data;
         } else {
             throw new ServiceException(CommonExceptionConstants::getKey('no_find_data'));

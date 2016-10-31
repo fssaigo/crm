@@ -105,9 +105,7 @@ class UserService implements IUser
                 if (isset($input['deleted']) && $input['deleted']) {
                     $user->setIsDeleted($input['deleted']);
                 }
-                if (!$user->save()) {
-                    throw new ServiceException(CommonExceptionConstants::getKey('no_data_updated'));
-                }
+                $user->save();
             } else {
                 throw new ServiceException(CommonExceptionConstants::getKey('no_find_data'));
             }
@@ -118,8 +116,8 @@ class UserService implements IUser
 
     public function setRole(SysUserContext $sysUserContext, $userId, $userRoleId) {
         $update = [];
-        $update['user_role_id'] = $userRoleId;
-        $this->userService->editUser($sysUserContext, $update, $userId);
+        $update['userRoleId'] = $userRoleId;
+        $this->editUser($sysUserContext, $update, $userId);
     }
 
     public function Login($input) {

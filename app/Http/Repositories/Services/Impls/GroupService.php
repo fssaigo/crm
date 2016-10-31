@@ -15,6 +15,7 @@ use App\Http\Repositories\Eloquent\Group;
 use App\Exceptions\ServiceException;
 use App\Http\Repositories\Services\ICustomer;
 use App\Http\Repositories\Services\IGroup;
+use App\Http\Repositories\Services\IUser;
 use App\Http\Requests\SysUserContext;
 use App\Util\Helper;
 
@@ -25,13 +26,15 @@ class GroupService implements IGroup
     protected $groupDao;
     protected $merchantService;
     protected $customerService;
+    protected $userService;
 
-    public function __construct(IGroupDao $groupDao, MerchantService $merchantService, ICustomer $customerService, IUserDao $userDao)
+    public function __construct(IGroupDao $groupDao, MerchantService $merchantService, ICustomer $customerService, IUserDao $userDao, IUser $userService)
     {
         $this->userDao = $userDao;
         $this->groupDao = $groupDao;
         $this->merchantService = $merchantService;
         $this->customerService = $customerService;
+        $this->userService = $userService;
     }
 
     public function findByList($search, $offset, $size)
@@ -63,7 +66,7 @@ class GroupService implements IGroup
     public function saveGroup(SysUserContext $sysUserContext, $input)
     {
 
-        if ($this->merchantService->getMerchantUserId($sysUserContext->getMerchantId()) != $sysUserContext->getId()) {
+        if (!$sysUserContext->getIsLeader()) {
             throw new ServiceException(CommonExceptionConstants::getKey('no_data_permission'));
         }
 
@@ -76,7 +79,12 @@ class GroupService implements IGroup
         $group->setMerchantId($sysUserContext->getMerchantId());
         $group->setName($input['name']);
 
-        if (!$group->save()) {
+
+        if ($group->save()) {
+            if (isset($input['userId']) && $input['userId']) {
+                $this->userService->setRole($sysUserContext, $input['userId'], 2);
+            }
+        } else {
             throw new ServiceException(CommonExceptionConstants::getKey('data_save_failed'));
         }
 
@@ -98,7 +106,7 @@ class GroupService implements IGroup
             throw new ServiceException(CommonExceptionConstants::getKey('no_find_data'));
         }
 
-        if ($this->merchantService->getMerchantUserId($group->getMerchantId()) != $sysUserContext->getId()) {
+        if (!$sysUserContext->getIsLeader()) {
             throw new ServiceException(CommonExceptionConstants::getKey('no_data_permission'));
         }
 
@@ -113,6 +121,9 @@ class GroupService implements IGroup
         }
 
         if (!$group->save()) {
+            if (isset($input['userId']) && $input['userId']) {
+                $this->userService->setRole($sysUserContext, $input['userId'], 2);
+            }
             throw new ServiceException(CommonExceptionConstants::getKey('no_data_updated'));
         }
 
