@@ -42,8 +42,8 @@ class GroupController extends Controller
     public function store(SysUserContext $sysUserContext, GroupCreateRequest $request)
     {
         $input = $request->only('userId', 'name');
-        $this->groupService->saveGroup($sysUserContext, $input);
-        return response()->json(['result' => true]);
+        $data = $this->groupService->saveGroup($sysUserContext, $input);
+        return response()->json($data);
     }
 
     /**

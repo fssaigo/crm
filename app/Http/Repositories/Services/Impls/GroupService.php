@@ -84,6 +84,7 @@ class GroupService implements IGroup
             if (isset($input['userId']) && $input['userId']) {
                 $this->userService->setRole($sysUserContext, $input['userId'], 2);
             }
+            return $group;
         } else {
             throw new ServiceException(CommonExceptionConstants::getKey('data_save_failed'));
         }
