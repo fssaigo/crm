@@ -58,6 +58,10 @@ class PondService implements IPond
             throw new ServiceException(CommonExceptionConstants::getKey('not_available_data'));
         }
 
+        if (!$sysUserContext->getIsLeader() && !$sysUserContext->getIsDistribution()) {
+            throw new ServiceException(CommonExceptionConstants::getKey('no_data_permission'));
+        }
+
         $data = $this->pondDao->findByIds(explode(',',$ids));
 
         $i = 0;

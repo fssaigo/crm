@@ -34,6 +34,9 @@ class DistributionService implements IDistribution
         if (!intval($userId)) {
             throw new ServiceException(CommonExceptionConstants::getKey('not_available_data'));
         }
+        if (!$sysUserContext->getIsLeader() && !$sysUserContext->getIsCharge()) {
+            throw new ServiceException(CommonExceptionConstants::getKey('no_data_permission'));
+        }
         $data = $this->customerDao->findByIds(explode(',',$ids));
         if ((bool)$data) {
             foreach ($data as $record) {

@@ -51,14 +51,6 @@ class Merchant extends Orm
     {
         $this->attributes['mobile'] = $mobile;
     }
-    public function getAssigner()
-    {
-        return $this->attributes['assigner'];
-    }
-    public function setAssigner($assigner)
-    {
-        $this->attributes['assigner'] = $assigner;
-    }
     public function getIsDeleted()
     {
         return $this->attributes['is_deleted'];

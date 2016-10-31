@@ -63,7 +63,7 @@ class MerchantService implements IMerchant
         if ($id) {
             $merchant = $this->merchantDao->findOne($id);
             if ($merchant) {
-                if ($this->getMerchantUserId($merchant->getId()) != $sysUserContext->getId() && $sysUserContext->getId() != $id) {
+                if (!$sysUserContext->getIsLeader()) {
                     throw new ServiceException(CommonExceptionConstants::getKey('no_data_permission'));
                 }
                 if (isset($input['userId']) && $input['userId']) {
@@ -77,9 +77,6 @@ class MerchantService implements IMerchant
                 }
                 if (isset($input['mobile']) && $input['mobile']) {
                     $merchant->setMobile($input['mobile']);
-                }
-                if (isset($input['assigner']) && $input['assigner']) {
-                    $merchant->setAssigner($input['assigner']);
                 }
                 if (isset($input['deleted']) && $input['deleted']) {
                     $merchant->setIsDeleted($input['deleted']);

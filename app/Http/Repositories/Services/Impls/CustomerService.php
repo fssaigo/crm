@@ -125,10 +125,14 @@ class CustomerService implements ICustomer
 
     public function create(SysUserContext $sysUserContext, $input)
     {
+        if (!$sysUserContext->getIsLeader() && !$sysUserContext->getIsSale() && !$sysUserContext->getIsCharge()) {
+            throw new ServiceException(CommonExceptionConstants::getKey('no_data_permission'));
+        }
+
         $data = [];
         $data['merchant_id'] = $sysUserContext->getMerchantId();
-        $data['group_id'] = $sysUserContext->getGroupId();
-        $data['user_id'] = $sysUserContext->getId();
+        $data['group_id'] = intval($input['groupId']);
+        $data['user_id'] = intval($input['userId']);
         $data['assist_id'] = intval($input['assist']);
         $data['name'] = trim($input['name']);
         $data['sex'] = intval($input['sex']);
@@ -176,6 +180,10 @@ class CustomerService implements ICustomer
 
     public function update(SysUserContext $sysUserContext, $id, $input)
     {
+        if (!$sysUserContext->getIsLeader() && !$sysUserContext->getIsSale() && !$sysUserContext->getIsCharge()) {
+            throw new ServiceException(CommonExceptionConstants::getKey('no_data_permission'));
+        }
+
         $data = [];
         $data['name'] = $input['name'];
         $data['group_id'] = $input['groupId'];
@@ -253,6 +261,10 @@ class CustomerService implements ICustomer
 
     public function visitPost(SysUserContext $sysUserContext, $input)
     {
+
+        if (!$sysUserContext->getIsLeader() && !$sysUserContext->getIsSale() && !$sysUserContext->getIsCharge()) {
+            throw new ServiceException(CommonExceptionConstants::getKey('no_data_permission'));
+        }
 
         $data = [];
         $data['user_id'] = $sysUserContext->getId();

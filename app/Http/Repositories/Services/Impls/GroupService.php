@@ -82,7 +82,7 @@ class GroupService implements IGroup
 
         if ($group->save()) {
             if (isset($input['userId']) && $input['userId']) {
-                $this->userService->setRole($sysUserContext, $input['userId'], 2);
+                #$this->userService->setRole($sysUserContext, $input['userId'], 2);
             }
             return $group;
         } else {
@@ -93,6 +93,10 @@ class GroupService implements IGroup
 
     public function editGroup(SysUserContext $sysUserContext, $input, $id)
     {
+
+        if (!$sysUserContext->getIsLeader()) {
+            throw new ServiceException(CommonExceptionConstants::getKey('no_data_permission'));
+        }
 
         if (!(bool)$input) {
             throw new ServiceException(CommonExceptionConstants::getKey('not_available_data'));
@@ -107,10 +111,6 @@ class GroupService implements IGroup
             throw new ServiceException(CommonExceptionConstants::getKey('no_find_data'));
         }
 
-        if (!$sysUserContext->getIsLeader()) {
-            throw new ServiceException(CommonExceptionConstants::getKey('no_data_permission'));
-        }
-
         if (isset($input['userId']) && $input['userId']) {
             $group->setUserId($input['userId']);
         }
@@ -123,7 +123,7 @@ class GroupService implements IGroup
 
         if (!$group->save()) {
             if (isset($input['userId']) && $input['userId']) {
-                $this->userService->setRole($sysUserContext, $input['userId'], 2);
+                #$this->userService->setRole($sysUserContext, $input['userId'], 2);
             }
             throw new ServiceException(CommonExceptionConstants::getKey('no_data_updated'));
         }
