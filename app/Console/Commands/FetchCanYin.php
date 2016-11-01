@@ -20,7 +20,7 @@ class FetchCanYin extends Command
      *
      * @var string
      */
-    protected $description = '1111 get';
+    protected $description = 'Fetch Data From Other Database';
 
     /**
      * Create a new command instance.
