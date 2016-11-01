@@ -54,7 +54,7 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '120.77.54.130'),
+            'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'crm'),
             'username' => env('DB_USERNAME', 'crm'),
@@ -82,7 +82,7 @@ return [
 
         'zone' => [
             'driver' => 'mysql',
-            'host' => env('DB_DATABASE_ZONE', '120.77.54.130'),
+            'host' => env('DB_DATABASE_ZONE', '127.0.0.1'),
             'port' => env('DB_DATABASE_ZONE', '3306'),
             'database' => env('DB_DATABASE_ZONE', '91analytics'),
             'username' => env('DB_DATABASE_ZONE', '91analytics'),
