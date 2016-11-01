@@ -104,6 +104,7 @@ class FetchCanYin extends Command
         $ids = '';
         foreach ($results as $record) {
             if ($record->id) {
+                $project = $record->project ? $record->project : '';
                 $ids .= $record->id.',';
                 $arrTemp = [];
                 $arrTemp['name'] = '';
@@ -112,7 +113,7 @@ class FetchCanYin extends Command
                 $arrTemp['qq'] = '';
                 $arrTemp['email'] = '';
                 $arrTemp['channel_id'] = 200;
-                $arrTemp['project'] = $record->project;
+                $arrTemp['project'] = $project;
                 $arrTemp['project_url'] = 'http://'.$record->pinyin.'.91canyin.com';
                 $arrTemp['created_at'] = time();
                 $arrTemp['updated_at'] = time();
