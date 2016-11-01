@@ -54,11 +54,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '120.76.225.50'),
+            'host' => env('DB_HOST', '120.77.54.130'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'canyin'),
-            'username' => env('DB_USERNAME', 'canyin'),
-            'password' => env('DB_PASSWORD', 'canyin123'),
+            'database' => env('DB_DATABASE', 'crm'),
+            'username' => env('DB_USERNAME', 'crm'),
+            'password' => env('DB_PASSWORD', 'lLJA$4u8306h7$8KhajbhT3f'),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
@@ -82,11 +82,11 @@ return [
 
         'zone' => [
             'driver' => 'mysql',
-            'host' => env('DB_DATABASE_ZONE', '120.76.225.50'),
+            'host' => env('DB_DATABASE_ZONE', '120.77.54.130'),
             'port' => env('DB_DATABASE_ZONE', '3306'),
             'database' => env('DB_DATABASE_ZONE', '91analytics'),
-            'username' => env('DB_DATABASE_ZONE', '91canyin'),
-            'password' => env('DB_DATABASE_ZONE', 'FM3#214&Jmsddk'),
+            'username' => env('DB_DATABASE_ZONE', '91analytics'),
+            'password' => env('DB_DATABASE_ZONE', 'lLJA$4u8306h7$8KhajbhT3f'),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
