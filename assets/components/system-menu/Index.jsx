@@ -4,6 +4,7 @@ import React from 'react';
 import { Menu, Icon, notification } from 'antd';
 const SubMenu = Menu.SubMenu;
 
+import AppState from '../../common/AppState.jsx';
 import User from '../../models/User.jsx';
 import * as ErrorMessageExtractor from '../../util/ErrorMessageExtractor.jsx';
 
@@ -47,7 +48,7 @@ export default class SystemMenu extends React.Component {
     }
 
     render() {
-        const menuTitle = <span><Icon type={this.state.menuIcon} />chenying@liziba.com</span>;
+        const menuTitle = <span><Icon type={this.state.menuIcon} />{AppState.User.email}</span>;
         const menuStyle = { float: 'right' };
 
         return (
