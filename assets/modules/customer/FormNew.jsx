@@ -88,6 +88,12 @@ class FormNew extends React.Component {
         const experienceOptions = Metadata.experience.map(experience => {
             return <Option key={experience.id}>{experience.name}</Option>;
         });
+        const groupOptions = Metadata.groups.map(group => {
+            return <Option key={group.id}>{group.name}</Option>;
+        });
+        const userOptions = this.props.users.map(user => {
+            return <Option key={user.id}>{user.name}</Option>;
+        });
         const receptionOptions = this.props.users.map(user => {
             return <Option key={user.id}>{user.name}</Option>;
         });
@@ -173,7 +179,7 @@ class FormNew extends React.Component {
                             {getFieldDecorator('wx', {
 
                             })(
-                                <Input id="control-input" placeholder="微信号码" autoComplete="off" />
+                                <Input id="control-input" placeholder="微信联系情况" autoComplete="off" />
                             )}
                         </Form.Item>
                     </Col>
@@ -286,13 +292,36 @@ class FormNew extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={8}>
-                        <Form.Item label="来访接待" {...formItemLayout}>
-                            {getFieldDecorator('reception', {
+                    <Col span={24}>
+                        <Form.Item label="备注" labelCol={{span:2}} wrapperCol={{span:8}}>
+                            {getFieldDecorator('mark', {
 
                             })(
-                                <Select placeholder="选择接待人员">
-                                    {receptionOptions}
+                                <Input type="textarea" placeholder="输入备注内容" autoComplete="off" autosize={{minRows:1,maxRows:6}} />
+                            )}
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <hr className="layout-page-split"/>
+                <Row>
+                    <Col span={8}>
+                        <Form.Item label="所属小组" {...formItemLayout}>
+                            {getFieldDecorator('groupId', {
+
+                            })(
+                                <Select placeholder="选择所属小组">
+                                    {groupOptions}
+                                </Select>
+                            )}
+                        </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                        <Form.Item label="跟踪人员" {...formItemLayout}>
+                            {getFieldDecorator('userId', {
+
+                            })(
+                                <Select placeholder="选择跟踪人员">
+                                    {userOptions}
                                 </Select>
                             )}
                         </Form.Item>
@@ -310,12 +339,14 @@ class FormNew extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={24}>
-                        <Form.Item label="备注" labelCol={{span:2}} wrapperCol={{span:8}}>
-                            {getFieldDecorator('mark', {
+                    <Col span={8}>
+                        <Form.Item label="接待人员" {...formItemLayout}>
+                            {getFieldDecorator('reception', {
 
                             })(
-                                <Input type="textarea" placeholder="输入备注内容" autoComplete="off" autosize={{minRows:1,maxRows:6}} />
+                                <Select placeholder="选择接待人员">
+                                    {receptionOptions}
+                                </Select>
                             )}
                         </Form.Item>
                     </Col>

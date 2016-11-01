@@ -154,7 +154,7 @@ class FormBasicInfo extends React.Component {
                                 {getFieldDecorator('wx', {
 
                                 })(
-                                    <Input id="control-input" placeholder="微信添加情况" autoComplete="off" />
+                                    <Input id="control-input" placeholder="微信联系情况" autoComplete="off" />
                                 )}
                             </Form.Item>
                         </Col>
