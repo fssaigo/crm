@@ -9,6 +9,7 @@ import AppState from '../../common/AppState.jsx';
 const Metadata = AppState.Metadata;
 import User from '../../models/User.jsx';
 import ModalGroupCreate from './ModalGroupCreate.jsx';
+import ModalGroupEdit from './ModalGroupEdit.jsx';
 
 @observer
 export default class PageGroupList extends React.Component {
@@ -17,6 +18,8 @@ export default class PageGroupList extends React.Component {
         modalGroupCreateVisible: false,
         loadingUsers: false,
         users: [],
+        modalGroupEditVisible: false,
+        selectedGroups: [],
     };
 
     constructor(props) {
@@ -67,14 +70,46 @@ export default class PageGroupList extends React.Component {
         });
     }
 
+    handleGroupEdit(group) {
+        this.setState({
+            modalGroupEditVisible: true,
+            selectedGroups: [group],
+        }, () => {
+            this.fetchUsers();
+        });
+    }
+
+    handleCancelGroupEdit() {
+        this.setState({
+            modalGroupEditVisible: false,
+            selectedGroups: [],
+        });
+    }
+
+    handleSubmitGroupEdit(props) {
+        let groups = this.state.groups.slice();
+        let index = this.state.groups.findIndex(group => {
+            return group.id = props.id;
+        });
+        let group = groups[index];
+
+        group = {
+            ...group,
+            user_id: props.user_id,
+            name: props.name
+        };
+        groups.splice(index, 1, group);
+
+        this.setState({
+            groups,
+            modalGroupEditVisible: false,
+            selectedGroups: [],
+        });
+    }
+
     render() {
+        const handleGroupEdit = this.handleGroupEdit.bind(this);
         const columns = [
-            {
-                title: 'ID',
-                key: 'id',
-                dataIndex: 'id',
-                width: 200,
-            },
             {
                 title: '小组名称',
                 key: 'name',
@@ -84,8 +119,17 @@ export default class PageGroupList extends React.Component {
                 title: '创建时间',
                 key: 'created_at',
                 dataIndex: 'created_at',
-                width: 200,
+                width: 300,
             },
+            {
+                title: '操作',
+                key: 'id',
+                dataIndex: 'id',
+                width: 100,
+                render(id, record) {
+                    return <a href="javascript:;" onClick={() => handleGroupEdit(record)}>编辑</a>
+                }
+            }
         ];
 
         return (
@@ -105,6 +149,14 @@ export default class PageGroupList extends React.Component {
                     onCancel={this.handleCancelGroupCreate.bind(this)}
                     onOk={this.handleSubmitGroupCreate.bind(this)}
                 ></ModalGroupCreate>
+                <ModalGroupEdit
+                    visible={this.state.modalGroupEditVisible}
+                    loading={this.state.loadingUsers}
+                    users={this.state.users}
+                    group={this.state.selectedGroups[0]}
+                    onCancel={this.handleCancelGroupEdit.bind(this)}
+                    onOk={this.handleSubmitGroupEdit.bind(this)}
+                ></ModalGroupEdit>
             </Page>
         )
     }
