@@ -10,8 +10,8 @@ const Metadata = AppState.Metadata;
 
 export default class NavMenu extends React.Component {
     state = {
-        openMenu: `${AppState.openMenu}`,
-        selectedMenuItem: `${AppState.selectedMenuItem}`,
+        parent: `${AppState.Menu.parent}`,
+        sub: `${AppState.Menu.sub}`,
     };
 
     constructor(props) {
@@ -23,13 +23,13 @@ export default class NavMenu extends React.Component {
         // console.log(key);
         // console.log(selectedKeys);
         this.setState({
-            selectedMenuItem: key,
+            sub: key,
         });
     }
 
     render() {
-        const defaultOpenMenu = [this.state.openMenu];
-        const defaultSelectedMenuItem = [this.state.selectedMenuItem];
+        const defaultOpenMenu = [this.state.parent];
+        const defaultSelectedMenuItem = [this.state.sub];
 
         const menus = Metadata.menu.map(group => {
             return (

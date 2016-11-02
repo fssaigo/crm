@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import { observer } from 'mobx-react';
+import { observer, action } from 'mobx-react';
 import Page from '../../common/Page.jsx';
 import { Row, Col, Form, Table, Spin, Button, Icon, notification} from 'antd';
 
@@ -14,7 +14,7 @@ import ModalGroupEdit from './ModalGroupEdit.jsx';
 @observer
 export default class PageGroupList extends React.Component {
     state = {
-        groups: Metadata.groups.slice(),
+        groups: Metadata.groups,
         modalGroupCreateVisible: false,
         loadingUsers: false,
         users: [],
@@ -60,12 +60,9 @@ export default class PageGroupList extends React.Component {
     }
 
     handleSubmitGroupCreate(group) {
-        let groups = this.state.groups.slice();
-
-        groups.unshift(group);
+        this.state.groups.unshift(group);
 
         this.setState({
-            groups,
             modalGroupCreateVisible: false,
         });
     }
@@ -87,21 +84,19 @@ export default class PageGroupList extends React.Component {
     }
 
     handleSubmitGroupEdit(props) {
-        let groups = this.state.groups.slice();
         let index = this.state.groups.findIndex(group => {
             return group.id = props.id;
         });
-        let group = groups[index];
+        let group = this.state.groups[index];
 
         group = {
             ...group,
             user_id: props.user_id,
             name: props.name
         };
-        groups.splice(index, 1, group);
+        this.state.groups.splice(index, 1, group);
 
         this.setState({
-            groups,
             modalGroupEditVisible: false,
             selectedGroups: [],
         });

@@ -49,5 +49,24 @@ export default [
         pattern: '/ponds',
         exactly: true,
         page: PagePondList
-    }
+    },
+
+    // 用户管理
+    // {
+    //     pattern: '/users',
+    //     exactly: true,
+    //     page: PageCustomerList
+    // },
+    //
+    // {
+    //     pattern: '/users/:id',
+    //     page: PageCustomerDetail,
+    //     conflicts: [
+    //         {
+    //             pattern: '/users/new',
+    //             exactly: true,
+    //             page: PageCustomerNew
+    //         }
+    //     ]
+    // },
 ];

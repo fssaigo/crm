@@ -1,5 +1,7 @@
 'use strict';
 
+import { observable } from "mobx";
+
 function pathToCrumbs(path) {
     path = path.replace(/^\//, '');
     let segs = path.split('/');
@@ -43,11 +45,20 @@ if (path === '/') {
     }
 }
 
-const AppState = {
-    Metadata: window.__Metadata,
-    User: JSON.parse(sessionStorage.getItem('user') || '{}'),
-    openMenu: parent,
-    selectedMenuItem: sub,
-};
+class AppState {
+    Metadata = {
+        ...window.__Metadata,
+        groups: observable(window.__Metadata.groups),
+    };
+    User = JSON.parse(sessionStorage.getItem('user') || '{}');
+    Menu = {
+        parent: parent,
+        sub: sub,
+    };
+}
 
-export default AppState;
+let state = new AppState();
+
+window.state = state;
+
+export default state;
