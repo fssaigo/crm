@@ -48,70 +48,80 @@ class UserService implements IUser
     public function findUserList($search, $offset, $size)
     {
         $data = $this->userDao->findUser($search, $offset, $size);
-        foreach ($data['results'] as $key => $record) {
-            #$data['results'][$key]['created_at'] = date('Y-m-d H:i;s', $record['created_at']);
-            #$data['results'][$key]['updated_at'] = date('Y-m-d H:i;s', $record['updated_at']);
-        }
         return $data;
     }
 
     public function saveUser(SysUserContext $sysUserContext, $input)
     {
-        if (!$this->userDao->findByEmail($input['email'])) {
-            $password = bcrypt($input['password']);
-            $user = new User();
-            $user->setMerchantId($sysUserContext->getMerchantId());
-            $user->setGroupId($input['groupId']);
-            $user->setName($input['name']);
-            $user->setEmail($input['email']);
-            $user->setPassword($password);
-            $user->setMobile($input['mobile']);
-            if ($user->save()) {
-                return $user->id;
-            } else {
-                throw new ServiceException(CommonExceptionConstants::getKey('data_save_failed'));
-            }
-        } else {
+
+        if (!$sysUserContext->getIsLeader() && !$sysUserContext->getIsCharge()) {
+            throw new ServiceException(CommonExceptionConstants::getKey('no_jurisdiction'));
+        }
+
+        if ($this->userDao->findByEmail($input['email'])) {
             throw new ServiceException(CommonExceptionConstants::getKey('repeat_name_error'));
         }
+
+        $password = bcrypt($input['password']);
+
+        $user = new User();
+        $user->setMerchantId($sysUserContext->getMerchantId());
+        $user->setGroupId($input['groupId']);
+        $user->setName($input['name']);
+        $user->setEmail($input['email']);
+        $user->setPassword($password);
+        $user->setMobile($input['mobile']);
+
+        if ($user->save()) {
+            return $user->id;
+        } else {
+            throw new ServiceException(CommonExceptionConstants::getKey('data_save_failed'));
+        }
+
     }
 
     public function editUser(SysUserContext $sysUserContext, $input, $id)
     {
+
         if (!(bool)$input) {
             throw new ServiceException(CommonExceptionConstants::getKey('not_available_data'));
         }
-        if ($id) {
-            $user = $this->userDao->findOne($id);
-            if ($user) {
-                if ($sysUserContext->getId() != $id) {
-                    throw new ServiceException(CommonExceptionConstants::getKey('no_data_permission'));
-                }
-                if (isset($input['groupId']) && $input['groupId']) {
-                    $user->setGroupId($input['groupId']);
-                }
-                if (isset($input['userRoleId']) && $input['userRoleId']) {
-                    $user->setUserRoleId($input['userRoleId']);
-                }
-                if (isset($input['name']) && $input['name']) {
-                    $user->setName($input['name']);
-                }
-                if (isset($input['mobile']) && $input['mobile']) {
-                    $user->setMobile($input['mobile']);
-                }
-                if (isset($input['password']) && $input['password']) {
-                    $user->setPassword(bcrypt($input['password']));
-                }
-                if (isset($input['deleted']) && $input['deleted']) {
-                    $user->setIsDeleted($input['deleted']);
-                }
-                $user->save();
-            } else {
-                throw new ServiceException(CommonExceptionConstants::getKey('no_find_data'));
-            }
-        } else {
+
+        if (!$id) {
             throw new ServiceException(CommonExceptionConstants::getKey('not_available_data'));
         }
+
+        if ($sysUserContext->getId() != $id) {
+            throw new ServiceException(CommonExceptionConstants::getKey('no_jurisdiction'));
+        }
+
+        $user = $this->userDao->findOne($id);
+
+        if (!$user) {
+            throw new ServiceException(CommonExceptionConstants::getKey('no_find_data'));
+        }
+
+        if (isset($input['groupId']) && $input['groupId']) {
+            $user->setGroupId($input['groupId']);
+        }
+        if (isset($input['userRoleId']) && $input['userRoleId']) {
+            $user->setUserRoleId($input['userRoleId']);
+        }
+        if (isset($input['name']) && $input['name']) {
+            $user->setName($input['name']);
+        }
+        if (isset($input['mobile']) && $input['mobile']) {
+            $user->setMobile($input['mobile']);
+        }
+        if (isset($input['password']) && $input['password']) {
+            $user->setPassword(bcrypt($input['password']));
+        }
+        if (isset($input['deleted']) && $input['deleted']) {
+            $user->setIsDeleted($input['deleted']);
+        }
+
+        $user->save();
+
     }
 
     public function setRole(SysUserContext $sysUserContext, $userId, $userRoleId) {

@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(\App\Console\Commands\FetchCanYin::class)->everyMinute();
+        $schedule->command('FetchCanYin')->everyMinute();
     }
 
     /**
