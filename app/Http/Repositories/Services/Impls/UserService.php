@@ -12,6 +12,8 @@ namespace App\Http\Repositories\Services\Impls;
 use App\Exceptions\ServiceException;
 use App\Http\Constants\CommonExceptionConstants;
 use App\Http\Constants\ServiceExceptionConstants;
+use App\Http\Repositories\Daos\IGroupDao;
+use App\Http\Repositories\Daos\IMerchantDao;
 use App\Http\Repositories\Daos\IUserDao;
 use App\Http\Repositories\Services\IUser;
 use App\Http\Requests\SysUserContext;
@@ -21,10 +23,14 @@ class UserService implements IUser
 {
 
     protected $userDao;
+    protected $merchantDao;
+    protected $groupDao;
 
-    public function __construct(IUserDao $userDao)
+    public function __construct(IUserDao $userDao, IGroupDao $groupDao, IMerchantDao $merchantDao)
     {
         $this->userDao = $userDao;
+        $this->groupDao = $groupDao;
+        $this->merchantDao = $merchantDao;
     }
 
     public function findByUserId($id)
@@ -66,6 +72,7 @@ class UserService implements IUser
 
         $user = new User();
         $user->setMerchantId($sysUserContext->getMerchantId());
+        $user->setUserRoleId($input['userRoleId']);
         $user->setGroupId($input['groupId']);
         $user->setName($input['name']);
         $user->setEmail($input['email']);
@@ -73,12 +80,15 @@ class UserService implements IUser
         $user->setMobile($input['mobile']);
 
         if ($user->save()) {
+            $this->setRoleInfo($user->id, $input['userRoleId'], $input['groupId'], $sysUserContext->getMerchantId());
             return $user->id;
         } else {
             throw new ServiceException(CommonExceptionConstants::getKey('data_save_failed'));
         }
 
     }
+
+
 
     public function editUser(SysUserContext $sysUserContext, $input, $id)
     {
@@ -122,6 +132,23 @@ class UserService implements IUser
 
         $user->save();
 
+        $this->setRoleInfo($id, $input['userRoleId'], $input['groupId'], $user->merchant_id);
+
+    }
+
+    public function setRoleInfo($userId, $roleId, $groupId, $merchantId) {
+        switch ($roleId) {
+            case 2:
+                $update = [];
+                $update['user_id'] = $userId;
+                $this->groupDao->update($groupId, $update);
+                break;
+            case 4:
+                $update = [];
+                $update['user_id'] = $userId;
+                $this->merchantDao->update($merchantId, $update);
+                break;
+        }
     }
 
     public function setRole(SysUserContext $sysUserContext, $userId, $userRoleId) {

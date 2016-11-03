@@ -75,7 +75,7 @@ class UserController extends Controller
      */
     public function store(SysUserContext $sysUserContext, UserCreateRequest $request)
     {
-        $input = $request->only('groupId', 'name', 'password', 'email', 'mobile');
+        $input = $request->only('userRoleId','groupId', 'name', 'password', 'email', 'mobile');
         $id = $this->userService->saveUser($sysUserContext, $input);
         return response()->json(['id'=>$id]);
     }
@@ -101,7 +101,7 @@ class UserController extends Controller
      */
     public function update(SysUserContext $sysUserContext, Request $request, $id)
     {
-        $input = $request->only('groupId', 'name', 'password', 'mobile','deleted');
+        $input = $request->only('userRoleId','groupId', 'name', 'password', 'mobile','deleted');
         $this->userService->editUser($sysUserContext, $input, $id);
         return response()->json(['result' => true]);
     }
