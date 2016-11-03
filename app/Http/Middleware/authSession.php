@@ -26,7 +26,7 @@ class authSession
         $data = session('User');
         if (!$data['id']) {
             if ($request->ajax() || $request->wantsJson()) {
-                Throw new ServiceException(CommonExceptionConstants::getKey('unlogin_error'));
+                Throw new ServiceException(CommonExceptionConstants::getKey('no_login'));
             } else {
                 return redirect('/login');
             }

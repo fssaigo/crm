@@ -59,7 +59,7 @@ class UserService implements IUser
         }
 
         if ($this->userDao->findByEmail($input['email'])) {
-            throw new ServiceException(CommonExceptionConstants::getKey('repeat_name_error'));
+            throw new ServiceException(CommonExceptionConstants::getKey('repeat_email_error'));
         }
 
         $password = bcrypt($input['password']);

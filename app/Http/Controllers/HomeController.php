@@ -42,6 +42,7 @@ class HomeController extends Controller
         $baseConstant['level'] = Config::get('constant.level');
         $baseConstant['invest'] = Config::get('constant.invest');
         $baseConstant['experience'] = Config::get('constant.experience');
+        $baseConstant['role'] = Config::get('constant.user_role');
         $baseConstant['area'] = [];
         $baseConstant['channel'] = $this->channelService->getMyChannel($sysUserContext);
         $area = China::all();

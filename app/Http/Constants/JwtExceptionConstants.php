@@ -16,7 +16,7 @@ class JwtExceptionConstants extends BaseExceptionConstants
         return $code = [
             'not_available_data'=>      ['code'=>'1', 'message'=>'无效的传入参数'],
             'no_find_data'=>            ['code'=>'2', 'message'=>'数据不存在'],
-            'unlogin_error'=>           ['code'=>'3', 'message'=>'需要登录后才能访问'],
+            'no_login'=>           ['code'=>'3', 'message'=>'需要登录后才能访问'],
             'no_data_permission'=>      ['code'=>'4', 'message'=>'没有数据操作权限'],
             'read_file_error'=>         ['code'=>'5', 'message'=>'读取文件错误'],
             'beyond_image_max_size'=>   ['code'=>'6', 'message'=>'超过文件最大限制'],
