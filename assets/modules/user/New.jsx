@@ -26,15 +26,15 @@ class PageUserNew extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        this.setState({
-            saving: true,
-        });
-
         this.props.form.validateFields((errors, values) => {
             if (errors) {
                 console.log('Errors in PageUserNew', errors);
                 return;
             }
+
+            this.setState({
+                saving: true,
+            });
 
             User.save({
                 ...values
@@ -68,6 +68,9 @@ class PageUserNew extends React.Component {
             wrapperCol: { span: 14 },
         };
         const { getFieldDecorator } = this.props.form;
+        const roleOptions = Metadata.role.map(role => {
+            return <Option key={role.id}>{role.name}</Option>
+        });
         const groupOptions = Metadata.groups.map(group => {
             return <Option key={group.id}>{group.name}</Option>
         });
@@ -77,6 +80,19 @@ class PageUserNew extends React.Component {
                 <h2 className="layout-page-section-title"><span>新用户资料</span></h2>
                 <Form horizontal>
                     <Row>
+                        {/*<Col span={8}>*/}
+                            {/*<FormItem label="角色" {...formItemLayout}>*/}
+                                {/*{getFieldDecorator('role', {*/}
+                                    {/*rules: [*/}
+                                        {/*{required: true, message: '请选择用户角色'},*/}
+                                    {/*]*/}
+                                {/*})(*/}
+                                    {/*<Select placeholder="选择用户角色">*/}
+                                        {/*{roleOptions}*/}
+                                    {/*</Select>*/}
+                                {/*)}*/}
+                            {/*</FormItem>*/}
+                        {/*</Col>*/}
                         <Col span={8}>
                             <FormItem label="归属小组" {...formItemLayout}>
                                 {getFieldDecorator('groupId', {

@@ -49,6 +49,10 @@ class FilterList extends React.Component {
         const levelOptions = Metadata.level.map(level => {
             return <Option key={level.id}>{level.name}</Option>;
         });
+        const channelOptions = Metadata.channel.map(channel => {
+            return <Option key={channel.id}>{channel.name}</Option>;
+        });
+
         return (
             <Form horizontal>
                 <Row>
@@ -158,10 +162,6 @@ class FilterList extends React.Component {
                 </Row>
             </Form>
         )
-
-        const channelOptions = Metadata.channel.map(channel => {
-            return <Option key={channel.id}>{channel.name}</Option>;
-        });
     }
 }
 

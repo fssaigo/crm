@@ -2,9 +2,10 @@
 
 import * as request from '../util/Request.jsx';
 
-function list(offset = 0, size = 10) {
+function list(filters = {}, offset = 0, size = 10) {
     return request.get('/api/users', {
         offset,
+        ...filters,
         size
     });
 }
