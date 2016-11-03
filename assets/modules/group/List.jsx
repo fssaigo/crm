@@ -108,7 +108,12 @@ export default class PageGroupList extends React.Component {
             {
                 title: '小组名称',
                 key: 'name',
-                dataIndex: 'name'
+                dataIndex: 'name',
+            },
+            {
+                title: '组长',
+                key: 'user_name',
+                dataIndex: 'user_name',
             },
             {
                 title: '创建时间',
@@ -123,8 +128,8 @@ export default class PageGroupList extends React.Component {
                 width: 100,
                 render(id, record) {
                     return <a href="javascript:;" onClick={() => handleGroupEdit(record)}>编辑</a>
-                }
-            }
+                },
+            },
         ];
 
         return (
