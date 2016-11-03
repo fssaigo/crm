@@ -21,8 +21,8 @@ function save(group) {
     return request.post('/api/groups', group);
 }
 
-function update(id, user) {
-    console.log(user)
+function update(id, group) {
+    return request.put(`/api/groups/${id}`, group);
 }
 
 function assign(id, users) {

@@ -47,7 +47,7 @@ class FormNew extends React.Component {
 
                 notification.success({
                     message: '操作成功',
-                    description: '页面将跳转到该用户详情页面',
+                    description: '页面将跳转到该客户详情页面',
                     duration: 2,
                 });
             }, error => {

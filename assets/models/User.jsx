@@ -18,11 +18,11 @@ function getUsersByName(name) {
 }
 
 function getUserByMerchantAndGroup(merchantId, groupId) {
-    return request.get(`api/users/merchant/${merchantId}/group/${groupId}`);
+    return request.get(`/api/users/merchant/${merchantId}/group/${groupId}`);
 }
 
 function save(user) {
-    return request.post('users', user);
+    return request.post('/api/users', user);
 }
 
 function update(id, user) {

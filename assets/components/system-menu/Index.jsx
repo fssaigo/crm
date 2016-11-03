@@ -19,6 +19,9 @@ export default class SystemMenu extends React.Component {
 
     handleMenuClick(e) {
         switch (e.key) {
+            case 'settings':
+                this.showProfile(e);
+                break;
             case 'logout':
                 this.logout(e);
                 break;
@@ -47,6 +50,10 @@ export default class SystemMenu extends React.Component {
         });
     }
 
+    showProfile(e) {
+
+    }
+
     render() {
         const menuTitle = <span><Icon type={this.state.menuIcon} />{AppState.User.email}</span>;
         const menuStyle = { float: 'right' };
@@ -54,7 +61,7 @@ export default class SystemMenu extends React.Component {
         return (
             <Menu onClick={this.handleMenuClick.bind(this)} mode="horizontal" theme="dark" style={menuStyle}>
                 <SubMenu title={menuTitle}>
-                    {/*<Menu.Item key="settings"><Icon type="setting" />个人设置</Menu.Item>*/}
+                    <Menu.Item key="settings"><Icon type="setting" />个人设置</Menu.Item>
                     <Menu.Item key="logout">
                         <Icon type='logout' />退出系统
                     </Menu.Item>

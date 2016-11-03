@@ -58,7 +58,7 @@ class FormBasicInfo extends React.Component {
     render() {
         const formItemLayout = {
             labelCol: { span: 6 },
-            wrapperCol: { span: 14 }
+            wrapperCol: { span: 14 },
         };
         const { getFieldDecorator } = this.props.form;
         const levelOptions = Metadata.level.map(level => {
