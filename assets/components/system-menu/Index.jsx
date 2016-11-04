@@ -18,8 +18,8 @@ export default class SystemMenu extends React.Component {
         super(props);
     }
 
-    handleMenuClick(item, key) {
-        switch (key) {
+    handleMenuClick(item) {
+        switch (item.key) {
             case 'logout':
                 this.logout();
                 break;
