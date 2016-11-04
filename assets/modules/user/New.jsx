@@ -20,6 +20,7 @@ class PageUserNew extends React.Component {
         saving: false,
         saved: false,
         savedUserId: -1,
+        roleId: null,
     };
 
     constructor(props) {
@@ -28,6 +29,14 @@ class PageUserNew extends React.Component {
 
     getRedirectPath() {
         return `/users/${this.state.savedUserId}`;
+    }
+
+    handleRoleChange(roleId) {
+        roleId = parseInt(roleId, 10);
+
+        this.setState({
+            roleId,
+        });
     }
 
     handleSubmit(e) {
@@ -89,32 +98,34 @@ class PageUserNew extends React.Component {
                 <h2 className="layout-page-section-title"><span>新用户资料</span></h2>
                 <Form horizontal>
                     <Row>
-                        {/*<Col span={8}>*/}
-                            {/*<FormItem label="角色" {...formItemLayout}>*/}
-                                {/*{getFieldDecorator('role', {*/}
-                                    {/*rules: [*/}
-                                        {/*{required: true, message: '请选择用户角色'},*/}
-                                    {/*]*/}
-                                {/*})(*/}
-                                    {/*<Select placeholder="选择用户角色">*/}
-                                        {/*{roleOptions}*/}
-                                    {/*</Select>*/}
-                                {/*)}*/}
-                            {/*</FormItem>*/}
-                        {/*</Col>*/}
                         <Col span={8}>
-                            <FormItem label="归属小组" {...formItemLayout}>
-                                {getFieldDecorator('groupId', {
+                            <FormItem label="角色" {...formItemLayout}>
+                                {getFieldDecorator('role', {
                                     rules: [
-                                        {required: true, message: '请选择用户归属小组'},
+                                        {required: true, message: '请选择用户角色'},
                                     ]
                                 })(
-                                    <Select placeholder="选择用户归属小组">
-                                        {groupOptions}
+                                    <Select placeholder="选择用户角色" onChange={this.handleRoleChange.bind(this)}>
+                                        {roleOptions}
                                     </Select>
                                 )}
                             </FormItem>
                         </Col>
+                        {this.state.roleId && (this.state.roleId !== 3) && (
+                            <Col span={8}>
+                                <FormItem label="归属小组" {...formItemLayout}>
+                                    {getFieldDecorator('groupId', {
+                                        rules: [
+                                            {required: true, message: '请选择用户归属小组'},
+                                        ]
+                                    })(
+                                        <Select placeholder="选择用户归属小组">
+                                            {groupOptions}
+                                        </Select>
+                                    )}
+                                </FormItem>
+                            </Col>
+                        )}
                     </Row>
                     <Row>
                         <Col span={8}>
