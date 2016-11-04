@@ -6,6 +6,7 @@ import Page from '../../common/Page.jsx';
 import { Row, Col, Form, Select, Input, Button, Spin, notification } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
+import { Redirect } from 'react-router';
 
 import AppState from '../../common/AppState.jsx';
 const Metadata = AppState.Metadata;
@@ -17,10 +18,16 @@ import * as ErrorMessageExtractor from '../../util/ErrorMessageExtractor.jsx';
 class PageUserNew extends React.Component {
     state = {
         saving: false,
+        saved: false,
+        savedUserId: -1,
     };
 
     constructor(props) {
         super(props);
+    }
+
+    getRedirectPath() {
+        return `/users/${this.state.savedUserId}`;
     }
 
     handleSubmit(e) {
@@ -41,6 +48,8 @@ class PageUserNew extends React.Component {
             }).then(response => {
                 this.setState({
                     saving: false,
+                    saved: true,
+                    savedUserId: response.data.id,
                 });
 
                 notification.success({
@@ -169,6 +178,7 @@ class PageUserNew extends React.Component {
                         </Col>
                     </Row>
                 </Form>
+                {this.state.saved && (this.state.savedUserId > -1) && <Redirect to={this.getRedirectPath()} push />}
             </Page>
         )
     }

@@ -10,6 +10,11 @@ function list(filters = {}, offset = 0, size = 10) {
     });
 }
 
+function get(id) {
+    return request.get(`/api/users/${id}`);
+}
+
+
 function getUsersByName(name) {
     name = encodeURIComponent(name);
 
@@ -27,7 +32,7 @@ function save(user) {
 }
 
 function update(id, user) {
-    console.log(user)
+    return request.put(`/api/users/${id}`, user);
 }
 
 function signin(credentials) {
@@ -41,6 +46,7 @@ function signout() {
 }
 
 export default {
+    get,
     getUsersByName,
     getUserByMerchantAndGroup,
     list,

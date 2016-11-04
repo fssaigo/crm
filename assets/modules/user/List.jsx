@@ -119,7 +119,7 @@ export default class PageUserList extends React.Component {
                 render(id) {
                     return (
                         <div className="layout-table-actions">
-                            <Link to={`/users/${id}`} disabled>编辑</Link>
+                            <Link to={`/users/${id}`}>编辑</Link>
                         </div>
                     )
                 },

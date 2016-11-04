@@ -28,12 +28,6 @@ class App extends React.Component {
                         <SystemMenu/>
                     </Header>
                     <div className="layout-page-container">
-                        {/*<div className="layout-page-breadcrumb">*/}
-                            {/*<Breadcrumb>*/}
-                                {/*<Breadcrumb.Item><a href="#">项目管理</a></Breadcrumb.Item>*/}
-                                {/*<Breadcrumb.Item>进度跟踪</Breadcrumb.Item>*/}
-                            {/*</Breadcrumb>*/}
-                        {/*</div>*/}
                         <div className="layout-page-wrapper">
                             <aside className="layout-page-aside">
                                 <Affix>
