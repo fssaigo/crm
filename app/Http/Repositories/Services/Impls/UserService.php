@@ -101,7 +101,7 @@ class UserService implements IUser
             throw new ServiceException(CommonExceptionConstants::getKey('not_available_data'));
         }
 
-        if ($sysUserContext->getId() != $id) {
+        if (!$sysUserContext->getIsLeader() && !$sysUserContext->getIsCharge()) {
             throw new ServiceException(CommonExceptionConstants::getKey('no_jurisdiction'));
         }
 
