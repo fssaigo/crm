@@ -124,10 +124,10 @@ class UserService implements IUser
             $user->setMobile($input['mobile']);
         }
         if (isset($input['password']) && $input['password']) {
-            $user->setPassword(bcrypt($input['password']));
+            //$user->setPassword(bcrypt($input['password']));
         }
         if (isset($input['deleted']) && $input['deleted']) {
-            $user->setIsDeleted($input['deleted']);
+            //$user->setIsDeleted($input['deleted']);
         }
 
         $user->save();
