@@ -2,12 +2,18 @@
 
 import * as request from '../util/Request.jsx';
 
-function list(offset = 0, size = 10) {
+function list(filters = {}, offset = 0, size = 10) {
     return request.get('/api/users', {
         offset,
+        ...filters,
         size
     });
 }
+
+function get(id) {
+    return request.get(`/api/users/${id}`);
+}
+
 
 function getUsersByName(name) {
     name = encodeURIComponent(name);
@@ -26,7 +32,7 @@ function save(user) {
 }
 
 function update(id, user) {
-    console.log(user)
+    return request.put(`/api/users/${id}`, user);
 }
 
 function signin(credentials) {
@@ -40,6 +46,7 @@ function signout() {
 }
 
 export default {
+    get,
     getUsersByName,
     getUserByMerchantAndGroup,
     list,

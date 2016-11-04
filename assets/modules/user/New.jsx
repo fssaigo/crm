@@ -6,6 +6,7 @@ import Page from '../../common/Page.jsx';
 import { Row, Col, Form, Select, Input, Button, Spin, notification } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
+import { Redirect } from 'react-router';
 
 import AppState from '../../common/AppState.jsx';
 const Metadata = AppState.Metadata;
@@ -17,18 +18,20 @@ import * as ErrorMessageExtractor from '../../util/ErrorMessageExtractor.jsx';
 class PageUserNew extends React.Component {
     state = {
         saving: false,
+        saved: false,
+        savedUserId: -1,
     };
 
     constructor(props) {
         super(props);
     }
 
+    getRedirectPath() {
+        return `/users/${this.state.savedUserId}`;
+    }
+
     handleSubmit(e) {
         e.preventDefault();
-
-        this.setState({
-            saving: true,
-        });
 
         this.props.form.validateFields((errors, values) => {
             if (errors) {
@@ -36,11 +39,17 @@ class PageUserNew extends React.Component {
                 return;
             }
 
+            this.setState({
+                saving: true,
+            });
+
             User.save({
                 ...values
             }).then(response => {
                 this.setState({
                     saving: false,
+                    saved: true,
+                    savedUserId: response.data.id,
                 });
 
                 notification.success({
@@ -68,6 +77,9 @@ class PageUserNew extends React.Component {
             wrapperCol: { span: 14 },
         };
         const { getFieldDecorator } = this.props.form;
+        const roleOptions = Metadata.role.map(role => {
+            return <Option key={role.id}>{role.name}</Option>
+        });
         const groupOptions = Metadata.groups.map(group => {
             return <Option key={group.id}>{group.name}</Option>
         });
@@ -77,6 +89,19 @@ class PageUserNew extends React.Component {
                 <h2 className="layout-page-section-title"><span>新用户资料</span></h2>
                 <Form horizontal>
                     <Row>
+                        {/*<Col span={8}>*/}
+                            {/*<FormItem label="角色" {...formItemLayout}>*/}
+                                {/*{getFieldDecorator('role', {*/}
+                                    {/*rules: [*/}
+                                        {/*{required: true, message: '请选择用户角色'},*/}
+                                    {/*]*/}
+                                {/*})(*/}
+                                    {/*<Select placeholder="选择用户角色">*/}
+                                        {/*{roleOptions}*/}
+                                    {/*</Select>*/}
+                                {/*)}*/}
+                            {/*</FormItem>*/}
+                        {/*</Col>*/}
                         <Col span={8}>
                             <FormItem label="归属小组" {...formItemLayout}>
                                 {getFieldDecorator('groupId', {
@@ -153,6 +178,7 @@ class PageUserNew extends React.Component {
                         </Col>
                     </Row>
                 </Form>
+                {this.state.saved && (this.state.savedUserId > -1) && <Redirect to={this.getRedirectPath()} push />}
             </Page>
         )
     }

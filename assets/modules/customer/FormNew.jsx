@@ -15,7 +15,7 @@ import * as ErrorMessageExtractor from '../../util/ErrorMessageExtractor.jsx';
 @observer
 class FormNew extends React.Component {
     state = {
-        isSaving: false,
+        saving: false,
         saved: false,
         savedCustomerId: -1,
     }
@@ -37,10 +37,10 @@ class FormNew extends React.Component {
                 return;
             }
 
-            this.setState({ isSaving: true });
+            this.setState({ saving: true });
             Customer.save(values).then(response => {
                 this.setState({
-                    isSaving: false,
+                    saving: false,
                     saved: true,
                     savedCustomerId: response.data.id,
                 });
@@ -52,7 +52,7 @@ class FormNew extends React.Component {
                 });
             }, error => {
                 this.setState({
-                    isSaving: false,
+                    saving: false,
                 });
                 notification.error({
                     message: '操作失败',
@@ -355,7 +355,7 @@ class FormNew extends React.Component {
                     <Col span={24}>
                         <Form.Item wrapperCol={{span:8, offset:2}}>
                             <Button type="primary"
-                                    loading={this.state.isSaving}
+                                    loading={this.state.saving}
                                     disabled={this.state.saved}
                                     onClick={this.handleSubmit.bind(this)}
                             >保存新客户资料</Button>

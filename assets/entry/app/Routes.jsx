@@ -10,7 +10,9 @@ import PageGroupList from '../../modules/group/List.jsx';
 
 import PagePondList from '../../modules/pond/List.jsx';
 
+import PageUserList from '../../modules/user/List.jsx';
 import PageUserNew from '../../modules/user/New.jsx';
+import PageUserDetail from '../../modules/user/Detail.jsx';
 
 export default [
     // Dashboard
@@ -57,12 +59,12 @@ export default [
     {
         pattern: '/users',
         exactly: true,
-        page: PageCustomerList
+        page: PageUserList
     },
 
     {
         pattern: '/users/:id',
-        page: PageCustomerDetail,
+        page: PageUserDetail,
         conflicts: [
             {
                 pattern: '/users/new',

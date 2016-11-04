@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import { Link } from 'react-router';
 import { Menu, Icon, notification } from 'antd';
 const SubMenu = Menu.SubMenu;
 
@@ -17,19 +18,16 @@ export default class SystemMenu extends React.Component {
         super(props);
     }
 
-    handleMenuClick(e) {
-        switch (e.key) {
-            case 'settings':
-                this.showProfile(e);
-                break;
+    handleMenuClick(item, key) {
+        switch (key) {
             case 'logout':
-                this.logout(e);
+                this.logout();
                 break;
             default: break;
         }
     }
 
-    logout(e) {
+    logout() {
         this.setState({
             menuIcon: 'loading'
         });
@@ -50,10 +48,6 @@ export default class SystemMenu extends React.Component {
         });
     }
 
-    showProfile(e) {
-
-    }
-
     render() {
         const menuTitle = <span><Icon type={this.state.menuIcon} />{AppState.User.email}</span>;
         const menuStyle = { float: 'right' };
@@ -61,7 +55,7 @@ export default class SystemMenu extends React.Component {
         return (
             <Menu onClick={this.handleMenuClick.bind(this)} mode="horizontal" theme="dark" style={menuStyle}>
                 <SubMenu title={menuTitle}>
-                    <Menu.Item key="settings"><Icon type="setting" />个人设置</Menu.Item>
+                    <Menu.Item key="settings"><Link to={`/users/6`}><Icon type="setting" />个人设置</Link></Menu.Item>
                     <Menu.Item key="logout">
                         <Icon type='logout' />退出系统
                     </Menu.Item>
