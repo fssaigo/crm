@@ -20,7 +20,7 @@ class PageUserNew extends React.Component {
         saving: false,
         saved: false,
         savedUserId: -1,
-        roleId: null,
+        userRoleId: null,
     };
 
     constructor(props) {
@@ -31,11 +31,11 @@ class PageUserNew extends React.Component {
         return `/users/${this.state.savedUserId}`;
     }
 
-    handleRoleChange(roleId) {
-        roleId = parseInt(roleId, 10);
+    handleRoleChange(userRoleId) {
+        userRoleId = parseInt(userRoleId, 10);
 
         this.setState({
-            roleId,
+            userRoleId,
         });
     }
 
@@ -100,7 +100,7 @@ class PageUserNew extends React.Component {
                     <Row>
                         <Col span={8}>
                             <FormItem label="角色" {...formItemLayout}>
-                                {getFieldDecorator('role', {
+                                {getFieldDecorator('userRoleId', {
                                     rules: [
                                         {required: true, message: '请选择用户角色'},
                                     ]
@@ -111,7 +111,7 @@ class PageUserNew extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                        {this.state.roleId && (this.state.roleId !== 3) && (
+                        {this.state.userRoleId && (this.state.userRoleId !== 3) && (
                             <Col span={8}>
                                 <FormItem label="归属小组" {...formItemLayout}>
                                     {getFieldDecorator('groupId', {
