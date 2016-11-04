@@ -101,6 +101,18 @@ export default class PageUserList extends React.Component {
                 dataIndex: 'mobile',
             },
             {
+                title: '系统角色',
+                key: 'user_role_id',
+                dataIndex: 'user_role_id',
+                render(user_role_id) {
+                    let role = Metadata.role.find(role => {
+                        return role.id === user_role_id;
+                    });
+
+                    return role ? role.name : '';
+                }
+            },
+            {
                 title: '所属小组',
                 key: 'group_id',
                 dataIndex: 'group_id',
