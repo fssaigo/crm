@@ -24,7 +24,6 @@ class UserCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'groupId' => 'required',
             'name' => 'between:2,50',
             'password' => 'between:6,30',
             'email' => 'required|email',
@@ -35,7 +34,6 @@ class UserCreateRequest extends FormRequest
     public function messages()
     {
         return [
-            'groupId.required' => '归属小组不能为空',
             'name.between' => '长度必须在2-20个以内',
             'password.between' => '密码长度必须在6-30个以内',
             'email.required' => 'Email不能为空',

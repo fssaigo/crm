@@ -73,7 +73,7 @@ class UserService implements IUser
         $user = new User();
         $user->setMerchantId($sysUserContext->getMerchantId());
         $user->setUserRoleId($input['userRoleId']);
-        $user->setGroupId($input['groupId']);
+        $user->setGroupId(intval($input['groupId']));
         $user->setName($input['name']);
         $user->setEmail($input['email']);
         $user->setPassword($password);
