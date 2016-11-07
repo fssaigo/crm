@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { observer } from 'mobx-react';
-import Page from '../../common/Page.jsx';
-import { Row, Col, Form, Select, Input, Button, Spin, notification } from 'antd';
+import { Link } from 'react-router';
+import { Row, Col, Form, Select, Input, Button, Spin, Icon, notification } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -17,10 +17,19 @@ class FormUserDetail extends React.Component {
     state = {
         initializing: true,
         saving: false,
+        userRoleId: null,
     };
 
     constructor(props) {
         super(props);
+    }
+
+    handleRoleChange(userRoleId) {
+        userRoleId = parseInt(userRoleId, 10);
+
+        this.setState({
+            userRoleId,
+        });
     }
 
     handleSubmit(e) {
@@ -45,7 +54,7 @@ class FormUserDetail extends React.Component {
 
                 notification.success({
                     message: '操作成功',
-                    description: '页面将跳转到该用户详情页面',
+                    description: '用户资料已修改',
                     duration: 2,
                 });
             }).catch(error => {
@@ -75,35 +84,40 @@ class FormUserDetail extends React.Component {
             return <Option key={group.id}>{group.name}</Option>
         });
 
+        const originUserRoleId = parseInt(this.props.user.user_role_id, 10);
+        const userRoleId = this.state.userRoleId || originUserRoleId;
+
         return (
             <Form horizontal>
                 <Row>
                     <Col span={8}>
                         <FormItem label="角色" {...formItemLayout}>
-                            {getFieldDecorator('role', {
+                            {getFieldDecorator('userRoleId', {
                                 rules: [
-                                {required: true, message: '请选择用户角色'},
+                                    {required: true, message: '请选择用户角色'},
                                 ]
                             })(
-                                <Select placeholder="选择用户角色">
-                                {roleOptions}
+                                <Select placeholder="选择用户角色" onChange={this.handleRoleChange.bind(this)}>
+                                    {roleOptions}
                                 </Select>
                             )}
                         </FormItem>
                     </Col>
-                    <Col span={8}>
-                        <FormItem label="归属小组" {...formItemLayout}>
-                            {getFieldDecorator('groupId', {
-                                rules: [
-                                    {required: true, message: '请选择用户归属小组'},
-                                ]
-                            })(
-                                <Select placeholder="选择用户归属小组">
-                                    {groupOptions}
-                                </Select>
-                            )}
-                        </FormItem>
-                    </Col>
+                    {userRoleId && (userRoleId !== 3) && (
+                        <Col span={8}>
+                            <FormItem label="归属小组" {...formItemLayout}>
+                                {getFieldDecorator('groupId', {
+                                    rules: [
+                                        {required: true, message: '请选择用户归属小组'},
+                                    ]
+                                })(
+                                    <Select placeholder="选择用户归属小组">
+                                        {groupOptions}
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                    )}
                 </Row>
                 <Row>
                     <Col span={8}>
@@ -146,24 +160,11 @@ class FormUserDetail extends React.Component {
                         </FormItem>
                     </Col>
                 </Row>
-                {/*<Row>*/}
-                    {/*<Col span={8}>*/}
-                        {/*<FormItem label="密码" {...formItemLayout}>*/}
-                            {/*{getFieldDecorator('password', {*/}
-                                {/*rules: [*/}
-                                    {/*{required: true, message: '请设置用户登录密码'},*/}
-                                {/*]*/}
-                            {/*})(*/}
-                                {/*<Input placeholder="登录密码" autoComplete="off"/>*/}
-                            {/*)}*/}
-                        {/*</FormItem>*/}
-                    {/*</Col>*/}
-                {/*</Row>*/}
                 <Row>
                     <Col span={24}>
                         <Form.Item wrapperCol={{span:8, offset:2}}>
                             <Button type="primary" loading={this.state.saving} onClick={this.handleSubmit.bind(this)}>保存用户资料</Button>
-                            <Button className="layout-secondary-button">修改密码</Button>
+                            <Link className="layout-secondary-button" to="/users"><Icon type="double-left" />返回列表</Link>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -176,6 +177,12 @@ export default Form.create({
     // 初始化时绑定数据
     mapPropsToFields({user}) {
         let fields = {};
+
+        if (user.user_role_id) {
+            fields.userRoleId =  {
+                value: '' + user.user_role_id,
+            }
+        }
 
         if (user.group_id) {
             fields.groupId =  {
