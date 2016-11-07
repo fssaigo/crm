@@ -67,6 +67,16 @@ export default class SystemMenu extends React.Component {
         });
     }
 
+    handleSubmitModalSettings() {
+        this.setState({
+            modalSettingsVisible: false,
+        });
+
+        setTimeout(() => {
+            this.logout();
+        }, 2000);
+    }
+
     render() {
         const menuTitle = <span><Icon type={this.state.menuIcon} />{AppState.User.email}</span>;
         const selectedKeys = [];
@@ -88,6 +98,7 @@ export default class SystemMenu extends React.Component {
                 </Menu>
                 <ModalPasswordReset
                     visible={this.state.modalSettingsVisible}
+                    onOk={this.handleSubmitModalSettings.bind(this)}
                     onCancel={this.handleCancelModalSettings.bind(this)}
                 ></ModalPasswordReset>
             </div>
