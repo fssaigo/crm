@@ -1,36 +1,41 @@
 .layout-header {
-  height: 64px;
-  background-color: #fff;
+    height: 64px;
+    background-color: #fff;
 }
 
 .layout-header.dark {
-  background-color: #404040;
+    background-color: #404040;
 }
 
 .layout-header-container {
-  margin: 0 auto;
-  width: 1280px;
-  height: 64px;
+    margin: 0 auto;
+    width: 1280px;
+    height: 64px;
 }
 
 // ant override
-.layout-header-container > .ant-menu-horizontal {
-  line-height: 64px;
-  border-bottom: none;
-  background-color: transparent;
-  font-size: 13px;
+.layout-system-menu-wrapper {
+    float: right;
+    height: 64px;
+}
+
+.layout-system-menu-wrapper > .ant-menu-horizontal {
+    line-height: 64px;
+    border-bottom: none;
+    background-color: transparent;
+    font-size: 13px;
 }
 
 .ant-menu-horizontal .ant-menu-item,
 .ant-menu-horizontal .ant-menu-submenu {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .layout-header-container > .ant-menu-horizontal > .ant-menu-item,
 .layout-header-container > .ant-menu-horizontal > .ant-menu-submenu {
-  border-bottom: none;
+    border-bottom: none;
 }
 
 .layout-header-container > .ant-menu-horizontal > .ant-menu-item-selected a {
-  color: #fff;
+    color: #fff;
 }

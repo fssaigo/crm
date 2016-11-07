@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import { Button, Form, Input, Alert } from 'antd';
+import { Button, Form, Input, Alert, Icon } from 'antd';
 const createForm = Form.create;
 const FormItem = Form.Item;
 
@@ -47,56 +47,69 @@ class SigninForm extends React.Component {
     }
 
     render() {
-        const { getFieldProps } = this.props.form;
-        const emailProps = getFieldProps('email', {
-            validate: [{
-                rules: [
-                    { required: true, message: '请填写登录邮箱'},
-                ],
-                trigger: 'onBlur',
-            }, {
-                rules: [
-                    { type: 'email', message: '请输入正确的邮箱地址' },
-                ],
-                trigger: ['onBlur', 'onChange'],
-            }]
-        });
-        const passwordProps = getFieldProps('password', {
-            rules: [
-                { required: true, whitespace: true, message: '请填写登录密码' },
-            ]
-        });
-        const formItemLayout = {
-            labelCol: { span: 7 },
-            wrapperCol: { span: 12 },
-        };
+        const { getFieldDecorator } = this.props.form;
+        // const emailProps = getFieldProps('email', {
+        //     validate: [{
+        //         rules: [
+        //             { required: true, message: '请填写登录邮箱'},
+        //         ],
+        //         trigger: 'onBlur',
+        //     }, {
+        //         rules: [
+        //             { type: 'email', message: '请输入正确的邮箱地址' },
+        //         ],
+        //         trigger: ['onBlur', 'onChange'],
+        //     }]
+        // });
+        // const passwordProps = getFieldProps('password', {
+        //     rules: [
+        //         { required: true, whitespace: true, message: '请填写登录密码' },
+        //     ]
+        // });
 
         return (
             <div>
                 <Form horizontal>
                     {this.state.serverError ? (
-                        <FormItem wrapperCol={{span:12,offset:7}} style={{marginBottom:0}}>
+                        <FormItem style={{marginBottom:0}}>
                             <Alert message={this.state.serverError} type="error" showIcon />
                         </FormItem>
                     ) : ''}
-                    <FormItem
-                        {...formItemLayout}
-                        label="邮箱"
-                        hasFeedback
-                    >
-                        <Input {...emailProps} name="email" type="email" autoComplete="off" placeholder="登录邮箱" />
-
+                    <FormItem hasFeedback>
+                        {getFieldDecorator('email', {
+                            rules: [
+                                {type: 'email', message: '邮箱地址格式不正确'}
+                            ],
+                            trigger: 'onBlur',
+                        })(
+                            <Input
+                                addonBefore={<Icon type="user" />}
+                                type="email"
+                                autoComplete="off"
+                                placeholder="登录邮箱"
+                            />
+                        )}
                     </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="密码"
-                        hasFeedback
-                    >
-                        <Input {...passwordProps} name="password" type="password" autoComplete="off" placeholder="登录密码"
-                               onContextMenu={noop} onPaste={noop} onCopy={noop} onCut={noop}
-                        />
+                    <FormItem hasFeedback>
+                        {getFieldDecorator('password', {
+                            rules: [
+                                { required: true, whitespace: true, message: '请填写登录密码' },
+                            ],
+                            trigger: ['onBlur', 'onChange'],
+                        })(
+                            <Input
+                                addonBefore={<Icon type="lock" />}
+                                type="password"
+                                autoComplete="off"
+                                placeholder="登录密码"
+                                onContextMenu={noop}
+                                onPaste={noop}
+                                onCopy={noop}
+                                onCut={noop}
+                            />
+                        )}
                     </FormItem>
-                    <FormItem wrapperCol={{ span: 12, offset: 7 }}>
+                    <FormItem>
                         <Button type="primary"
                                 loading={this.state.signining}
                                 onClick={this.handleSubmit.bind(this)}

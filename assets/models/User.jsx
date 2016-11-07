@@ -45,6 +45,13 @@ function signout() {
     return request.post('/api/users/logout');
 }
 
+function resetPassword(password, newPassword) {
+    return request.put('/api/users/password', {
+        password,
+        newPassword
+    });
+}
+
 export default {
     get,
     getUsersByName,
@@ -53,5 +60,6 @@ export default {
     save,
     update,
     signin,
-    signout
+    signout,
+    resetPassword
 }
