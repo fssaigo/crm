@@ -12,6 +12,7 @@ import * as ErrorMessageExtractor from '../../util/ErrorMessageExtractor.jsx';
 class ModalPasswordReset extends React.Component {
     state = {
         saving: false,
+        passwordDirty: false,
     };
 
     constructor(props) {
@@ -28,13 +29,13 @@ class ModalPasswordReset extends React.Component {
                 saving: true,
             });
 
-            User.resetPassword({ ...values }).then(response => {
-                console.log(response.data);
+            User.resetPassword(values.password, values.newPassword).then(response => {
                 notification.success({
                     message: '操作成功',
                     description: `密码已修改，请重新登录`,
                     duration: 2,
                 });
+                this.props.onOk();
             }).catch(error => {
                 this.setState({
                     saving: false,
@@ -48,6 +49,30 @@ class ModalPasswordReset extends React.Component {
         });
     }
 
+    handlePasswordBlur(e) {
+        const value = e.target.value;
+        this.setState({
+            passwordDirty: this.state.passwordDirty || !!value
+        });
+    }
+
+    checkConfirm(rule, value, callback) {
+        if (value && this.state.passwordDirty) {
+            this.props.form.validateFields(['repeatPassword'], { force: true });
+        }
+
+        callback();
+    }
+
+    checkPassword(rule, value, callback) {
+        const form = this.props.form;
+        if (value && value !== form.getFieldValue('newPassword')) {
+            callback('确认密码不一致');
+        } else {
+            callback();
+        }
+    }
+
     render() {
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
@@ -58,6 +83,11 @@ class ModalPasswordReset extends React.Component {
             wrapperCol: {
                 span: 12,
             },
+        };
+        const lengthRule = {
+            len: true,
+            min: 6,
+            message: '密码必须大于6位'
         };
 
         return (
@@ -73,10 +103,14 @@ class ModalPasswordReset extends React.Component {
                             <FormItem label="当前密码" {...formItemLayout}>
                                 {getFieldDecorator('password', {
                                     rules: [
-                                        {required: true, message: '请输入当前密码'}
+                                        {required: true, message: '请输入当前密码'},
+                                        {...lengthRule}
                                     ]
                                 })(
-                                    <Input placeholder="当前密码" />
+                                    <Input type="password"
+                                           placeholder="当前密码"
+                                           autoComplete="off"
+                                    />
                                 )}
                             </FormItem>
                         </Col>
@@ -86,10 +120,16 @@ class ModalPasswordReset extends React.Component {
                             <FormItem label="新密码" {...formItemLayout}>
                                 {getFieldDecorator('newPassword', {
                                     rules: [
-                                        {required: true, message: '请输入新密码'}
+                                        {required: true, message: '请输入新密码'},
+                                        {...lengthRule},
+                                        {validator: this.checkConfirm.bind(this),},
                                     ]
                                 })(
-                                    <Input placeholder="新密码" />
+                                    <Input type="password"
+                                           placeholder="新密码"
+                                           autoComplete="off"
+                                           onBlur={this.handlePasswordBlur.bind(this)}
+                                    />
                                 )}
                             </FormItem>
                         </Col>
@@ -99,10 +139,15 @@ class ModalPasswordReset extends React.Component {
                             <FormItem label="重复新密码" {...formItemLayout}>
                                 {getFieldDecorator('repeatPassword', {
                                     rules: [
-                                        {required: true, message: '重复新密码'}
+                                        {required: true, message: '重复新密码'},
+                                        {...lengthRule},
+                                        {validator: this.checkPassword.bind(this),},
                                     ]
                                 })(
-                                    <Input placeholder="当前密码" />
+                                    <Input type="password"
+                                           placeholder="当前密码"
+                                           autoComplete="off"
+                                    />
                                 )}
                             </FormItem>
                         </Col>

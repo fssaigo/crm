@@ -94,6 +94,11 @@ class SigninForm extends React.Component {
                         {getFieldDecorator('password', {
                             rules: [
                                 { required: true, whitespace: true, message: '请填写登录密码' },
+                                {
+                                    len: true,
+                                    min: 6,
+                                    message: '密码必须大于6位'
+                                }
                             ],
                             trigger: ['onBlur', 'onChange'],
                         })(
