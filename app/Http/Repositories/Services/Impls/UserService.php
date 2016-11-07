@@ -136,6 +136,20 @@ class UserService implements IUser
 
     }
 
+    public function password(SysUserContext $sysUserContext, $password, $newPassword) {
+
+        $user = $this->userDao->findOne($sysUserContext->getId());
+
+        if (!password_verify($password, $user['password'])) {
+            throw new ServiceException(ServiceExceptionConstants::getKey('password_auth_filed'));
+        }
+
+        $user->setPassword(bcrypt($newPassword));
+
+        $user->save();
+
+    }
+
     public function setRoleInfo($userId, $roleId, $groupId, $merchantId) {
         switch ($roleId) {
             case 2:

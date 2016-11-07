@@ -24,6 +24,7 @@ class ServiceExceptionConstants extends BaseExceptionConstants
             'user_no_merchant'=>         ['code'=>'4', 'message'=>'该用户不属于任何商户'],
             'pond_was_assigned'=>        ['code'=>'4', 'message'=>'该数据已分配'],
             'user_no_role'=>             ['code'=>'5', 'message'=>'未知的角色'],
+            'password_auth_filed'=>      ['code'=>'6', 'message'=>'原始密码验证失败'],
         ];
     }
 

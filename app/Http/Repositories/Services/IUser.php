@@ -70,6 +70,8 @@ interface IUser
      */
     public function setRole(SysUserContext $sysUserContext, $userId, $userRoleId);
 
+    public function password(SysUserContext $sysUserContext, $password, $newPassword);
+
     /**
      * 发送短信
      * @param $input

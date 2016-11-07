@@ -40,6 +40,7 @@ Route::get('/api/customers/customersByMerchantId', 'CustomerController@customers
 Route::get('/api/ponds/assign', 'PondController@assign');
 Route::get('/api/ponds', 'PondController@index');
 Route::get('/api/users/names', 'UserController@names');
+Route::put('/api/users/password', 'UserController@password');
 Route::get('/api/users/merchant/{merchant}/group/{group}', 'UserController@findUserByMerchantGroup');
 Route::resource('api/customers', 'CustomerController');
 Route::resource('api/groups', 'GroupController');
