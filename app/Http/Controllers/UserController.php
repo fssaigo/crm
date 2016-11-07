@@ -107,9 +107,11 @@ class UserController extends Controller
     }
 
 
-    public function password(SysUserContext $sysUserContext, Request $request) {
-        $newPassword = $request->get('newPassword');
-        $password = $request->get('password');
+    public function password(SysUserContext $sysUserContext, Request $request)
+    {
+        $input = $request->only('password','newPassword');
+        $password = $input['password'];
+        $newPassword = $input['newPassword'];
         $this->userService->password($sysUserContext, $password, $newPassword);
         return response()->json(['result' => true]);
     }
